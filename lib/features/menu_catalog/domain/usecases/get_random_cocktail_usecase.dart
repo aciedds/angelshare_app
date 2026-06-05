@@ -1,3 +1,4 @@
+import 'package:angelshare_app/core/providers/data_state.dart';
 import 'package:angelshare_app/features/menu_catalog/domain/models/entities/alcohol/drink_detail_entity.dart';
 import 'package:angelshare_app/features/menu_catalog/domain/repositories/menu_catalog_repository.dart';
 
@@ -7,7 +8,7 @@ class GetRandomCocktailUseCase {
   GetRandomCocktailUseCase({required MenuCatalogRepository repository})
       : _repository = repository;
 
-  Future<DrinkDetailEntity> execute() {
+  Future<DataState<DrinkDetailEntity>> execute() {
     return _repository.getRandomCocktail();
   }
 }

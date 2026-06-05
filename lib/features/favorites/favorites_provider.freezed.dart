@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FavoritesState {
   List<FavoriteItemEntity> get favorites => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,11 +33,7 @@ abstract class $FavoritesStateCopyWith<$Res> {
     $Res Function(FavoritesState) then,
   ) = _$FavoritesStateCopyWithImpl<$Res, FavoritesState>;
   @useResult
-  $Res call({
-    List<FavoriteItemEntity> favorites,
-    bool isLoading,
-    String? errorMessage,
-  });
+  $Res call({List<FavoriteItemEntity> favorites});
 }
 
 /// @nodoc
@@ -56,25 +50,13 @@ class _$FavoritesStateCopyWithImpl<$Res, $Val extends FavoritesState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? favorites = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
-  }) {
+  $Res call({Object? favorites = null}) {
     return _then(
       _value.copyWith(
             favorites: null == favorites
                 ? _value.favorites
                 : favorites // ignore: cast_nullable_to_non_nullable
                       as List<FavoriteItemEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: freezed == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String?,
           )
           as $Val,
     );
@@ -90,11 +72,7 @@ abstract class _$$FavoritesStateImplCopyWith<$Res>
   ) = __$$FavoritesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<FavoriteItemEntity> favorites,
-    bool isLoading,
-    String? errorMessage,
-  });
+  $Res call({List<FavoriteItemEntity> favorites});
 }
 
 /// @nodoc
@@ -110,25 +88,13 @@ class __$$FavoritesStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? favorites = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
-  }) {
+  $Res call({Object? favorites = null}) {
     return _then(
       _$FavoritesStateImpl(
         favorites: null == favorites
             ? _value._favorites
             : favorites // ignore: cast_nullable_to_non_nullable
                   as List<FavoriteItemEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: freezed == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String?,
       ),
     );
   }
@@ -139,8 +105,6 @@ class __$$FavoritesStateImplCopyWithImpl<$Res>
 class _$FavoritesStateImpl implements _FavoritesState {
   const _$FavoritesStateImpl({
     final List<FavoriteItemEntity> favorites = const [],
-    this.isLoading = false,
-    this.errorMessage,
   }) : _favorites = favorites;
 
   final List<FavoriteItemEntity> _favorites;
@@ -153,14 +117,8 @@ class _$FavoritesStateImpl implements _FavoritesState {
   }
 
   @override
-  @JsonKey()
-  final bool isLoading;
-  @override
-  final String? errorMessage;
-
-  @override
   String toString() {
-    return 'FavoritesState(favorites: $favorites, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'FavoritesState(favorites: $favorites)';
   }
 
   @override
@@ -171,20 +129,12 @@ class _$FavoritesStateImpl implements _FavoritesState {
             const DeepCollectionEquality().equals(
               other._favorites,
               _favorites,
-            ) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_favorites),
-    isLoading,
-    errorMessage,
-  );
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_favorites));
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -199,18 +149,11 @@ class _$FavoritesStateImpl implements _FavoritesState {
 }
 
 abstract class _FavoritesState implements FavoritesState {
-  const factory _FavoritesState({
-    final List<FavoriteItemEntity> favorites,
-    final bool isLoading,
-    final String? errorMessage,
-  }) = _$FavoritesStateImpl;
+  const factory _FavoritesState({final List<FavoriteItemEntity> favorites}) =
+      _$FavoritesStateImpl;
 
   @override
   List<FavoriteItemEntity> get favorites;
-  @override
-  bool get isLoading;
-  @override
-  String? get errorMessage;
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.

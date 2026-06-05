@@ -1,41 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:angelshare_app/core/components/atoms/glass_container.dart';
 import 'package:angelshare_app/core/components/atoms/neon_text.dart';
 import 'package:angelshare_app/core/theme/app_theme.dart';
+import 'package:angelshare_app/core/theme/app_sizes.dart';
 import 'package:angelshare_app/features/cart/cart_provider.dart';
+import 'package:angelshare_app/features/cart/presentation/widgets/cart_item_card.dart';
+import 'package:angelshare_app/core/providers/view_state.dart';
 
 class CartTab extends HookConsumerWidget {
   const CartTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(cartNotifierProvider);
+    final viewState = ref.watch(cartNotifierProvider);
+    final state = viewState.data ?? const CartState();
     final notifier = ref.read(cartNotifierProvider.notifier);
 
+    final themeColors = Theme.of(context).extension<AppThemeColors>() ??
+        const AppThemeColors(
+          backgroundObsidian: Colors.black,
+          backgroundDeep: Colors.black87,
+          primary: Colors.amber,
+          accent: Colors.amberAccent,
+          muted: Colors.grey,
+          glassWhite: Colors.white10,
+          glassBorder: Colors.white24,
+          glassShadow: Colors.black38,
+        );
+
+    if (viewState is ViewStateLoading<CartState> && state.cartItems.isEmpty) {
+      return Center(
+        child: CircularProgressIndicator(color: themeColors.accent),
+      );
+    }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: EdgeInsets.symmetric(horizontal: AppSizes.xxl.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 16),
-          const NeonText(
+          SizedBox(height: AppSizes.lg.h),
+          NeonText(
             text: 'ORDER REPLICATOR',
-            glowColor: AppTheme.goldAccent,
+            glowColor: themeColors.accent,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: AppSizes.font3Xl.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
               letterSpacing: 2.0,
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: AppSizes.sm.h),
+          Text(
             'Queue formulas to compile and synthesize them physically.',
-            style: TextStyle(color: Color(0xFFA59EBF), fontSize: 13),
+            style: TextStyle(color: const Color(0xFFA59EBF), fontSize: AppSizes.fontSm.sp),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: AppSizes.xxl.h),
 
           Expanded(
             child: state.cartItems.isEmpty
@@ -45,22 +68,22 @@ class CartTab extends HookConsumerWidget {
                       children: [
                         Icon(
                           Icons.shopping_basket_outlined,
-                          color: AppTheme.goldAccent.withValues(alpha: 0.5),
-                          size: 64,
+                          color: themeColors.accent.withValues(alpha: 0.5),
+                          size: 64.r,
                         ),
-                        const SizedBox(height: 16),
-                        const Text(
+                        SizedBox(height: AppSizes.lg.h),
+                        Text(
                           'Replicator buffer is empty.',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: AppSizes.fontLg.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
+                        SizedBox(height: AppSizes.sm.h),
+                        Text(
                           'Scan menu catalog cards to queue formulas.',
-                          style: TextStyle(color: Color(0xFF8F88A3), fontSize: 12),
+                          style: TextStyle(color: const Color(0xFF8F88A3), fontSize: AppSizes.fontSm.sp),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -76,140 +99,55 @@ class CartTab extends HookConsumerWidget {
                             final item = state.cartItems[index];
 
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: GlassContainer(
-                                padding: const EdgeInsets.all(12),
-                                borderRadius: 20,
-                                blur: 10.0,
-                                backgroundColor: const Color(0x0CFFFFFF),
-                                borderColor: const Color(0x1BFFFFFF),
-                                child: Row(
-                                  children: [
-                                    // Thumbnail
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: item.thumbnailUrl != null
-                                          ? Image.network(
-                                              item.thumbnailUrl!,
-                                              width: 70,
-                                              height: 70,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Container(
-                                              width: 70,
-                                              height: 70,
-                                              color: Colors.black26,
-                                              child: const Icon(
-                                                Icons.local_bar,
-                                                 color: AppTheme.goldAccent,
-                                              ),
-                                            ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    
-                                    // Title & Pricing
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item.name,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(height: 6),
-                                          Text(
-                                            '${item.price} Mana',
-                                            style: const TextStyle(
-                                              color: AppTheme.goldAccent,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // Quantity Controls
-                                    Row(
-                                      children: [
-                                        _quantityBtn(
-                                          icon: Icons.remove_rounded,
-                                          onTap: () {
-                                            notifier.updateQuantity(
-                                              idDrink: item.id,
-                                              quantity: item.quantity - 1,
-                                            );
-                                          },
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                          child: Text(
-                                            '${item.quantity}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                        _quantityBtn(
-                                          icon: Icons.add_rounded,
-                                          onTap: () {
-                                            notifier.updateQuantity(
-                                              idDrink: item.id,
-                                              quantity: item.quantity + 1,
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                              padding: EdgeInsets.only(bottom: AppSizes.lg.h),
+                              child: CartItemCard(
+                                item: item,
+                                themeColors: themeColors,
+                                onQuantityChanged: (newQuantity) {
+                                  notifier.updateQuantity(
+                                    idDrink: item.id,
+                                    quantity: newQuantity,
+                                  );
+                                },
                               ),
                             );
                           },
                         ),
                       ),
-                      
+
                       // Summary Card
-                      const SizedBox(height: 16),
+                      SizedBox(height: AppSizes.lg.h),
                       GlassContainer(
-                        padding: const EdgeInsets.all(16),
-                        borderRadius: 20,
-                        backgroundColor: const Color(0x13FFFFFF),
-                        borderColor: AppTheme.goldAccent.withValues(alpha: 0.3),
+                        padding: EdgeInsets.all(AppSizes.lg.w),
+                        borderRadius: AppSizes.radius2Xl,
+                        backgroundColor: themeColors.glassWhite,
+                        borderColor: themeColors.accent.withValues(alpha: 0.3),
                         child: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   'TOTAL MANA REQUIRED',
                                   style: TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFFA59EBF),
+                                    fontSize: AppSizes.fontXs.sp,
+                                    color: const Color(0xFFA59EBF),
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 1.5,
                                   ),
                                 ),
                                 NeonText(
                                   text: '${notifier.totalMana} Mana',
-                                  glowColor: AppTheme.goldAccent,
-                                  style: const TextStyle(
-                                    fontSize: 18,
+                                  glowColor: themeColors.accent,
+                                  style: TextStyle(
+                                    fontSize: AppSizes.fontXl.sp,
                                     fontWeight: FontWeight.w900,
                                     color: Colors.white,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
+                            SizedBox(height: AppSizes.lg.h),
                             ElevatedButton.icon(
                               onPressed: () async {
                                 final count = state.cartItems.length;
@@ -218,34 +156,35 @@ class CartTab extends HookConsumerWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Successfully synthesized $count formulas!'),
-                                      backgroundColor: AppTheme.backgroundDeep,
+                                      backgroundColor: themeColors.backgroundDeep,
                                     ),
                                   );
                                 }
                               },
-                              icon: const Icon(Icons.rocket_launch_rounded, color: Colors.black),
-                              label: const Text(
-                                'SYNTHESIZE blue-prints',
+                              icon: Icon(Icons.rocket_launch_rounded, color: Colors.black, size: 18.r),
+                              label: Text(
+                                'SYNTHESIZE BLUEPRINTS',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1,
+                                  fontSize: AppSizes.fontSm.sp,
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppTheme.goldAccent,
-                                shadowColor: AppTheme.goldAccent,
+                                backgroundColor: themeColors.accent,
+                                shadowColor: themeColors.accent,
                                 elevation: 8,
-                                minimumSize: const Size.fromHeight(50),
+                                minimumSize: Size.fromHeight(50.h),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                                  borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: AppSizes.xxl.h),
                     ],
                   ),
           ),
@@ -254,21 +193,4 @@ class CartTab extends HookConsumerWidget {
     );
   }
 
-  Widget _quantityBtn({
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: const Color(0x1BFFFFFF),
-          border: Border.all(color: const Color(0x33FFFFFF)),
-        ),
-        child: Icon(icon, color: Colors.white, size: 16),
-      ),
-    );
-  }
 }

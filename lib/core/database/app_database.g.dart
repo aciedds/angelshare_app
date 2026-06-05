@@ -2141,6 +2141,414 @@ class FavoriteTableCompanion extends UpdateCompanion<FavoriteTableData> {
   }
 }
 
+class $UiWidgetTableTable extends UiWidgetTable
+    with TableInfo<$UiWidgetTableTable, UiWidgetConfig> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UiWidgetTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _colorSlotMeta = const VerificationMeta(
+    'colorSlot',
+  );
+  @override
+  late final GeneratedColumn<String> colorSlot = GeneratedColumn<String>(
+    'color_slot',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('primary'),
+  );
+  static const VerificationMeta _metadataMeta = const VerificationMeta(
+    'metadata',
+  );
+  @override
+  late final GeneratedColumn<String> metadata = GeneratedColumn<String>(
+    'metadata',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    isEnabled,
+    sortOrder,
+    colorSlot,
+    metadata,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ui_widget_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<UiWidgetConfig> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('color_slot')) {
+      context.handle(
+        _colorSlotMeta,
+        colorSlot.isAcceptableOrUnknown(data['color_slot']!, _colorSlotMeta),
+      );
+    }
+    if (data.containsKey('metadata')) {
+      context.handle(
+        _metadataMeta,
+        metadata.isAcceptableOrUnknown(data['metadata']!, _metadataMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  UiWidgetConfig map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UiWidgetConfig(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      colorSlot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color_slot'],
+      )!,
+      metadata: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}metadata'],
+      ),
+    );
+  }
+
+  @override
+  $UiWidgetTableTable createAlias(String alias) {
+    return $UiWidgetTableTable(attachedDatabase, alias);
+  }
+}
+
+class UiWidgetConfig extends DataClass implements Insertable<UiWidgetConfig> {
+  final String id;
+  final String name;
+  final bool isEnabled;
+  final int sortOrder;
+  final String colorSlot;
+  final String? metadata;
+  const UiWidgetConfig({
+    required this.id,
+    required this.name,
+    required this.isEnabled,
+    required this.sortOrder,
+    required this.colorSlot,
+    this.metadata,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['color_slot'] = Variable<String>(colorSlot);
+    if (!nullToAbsent || metadata != null) {
+      map['metadata'] = Variable<String>(metadata);
+    }
+    return map;
+  }
+
+  UiWidgetTableCompanion toCompanion(bool nullToAbsent) {
+    return UiWidgetTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      isEnabled: Value(isEnabled),
+      sortOrder: Value(sortOrder),
+      colorSlot: Value(colorSlot),
+      metadata: metadata == null && nullToAbsent
+          ? const Value.absent()
+          : Value(metadata),
+    );
+  }
+
+  factory UiWidgetConfig.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UiWidgetConfig(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      colorSlot: serializer.fromJson<String>(json['colorSlot']),
+      metadata: serializer.fromJson<String?>(json['metadata']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'colorSlot': serializer.toJson<String>(colorSlot),
+      'metadata': serializer.toJson<String?>(metadata),
+    };
+  }
+
+  UiWidgetConfig copyWith({
+    String? id,
+    String? name,
+    bool? isEnabled,
+    int? sortOrder,
+    String? colorSlot,
+    Value<String?> metadata = const Value.absent(),
+  }) => UiWidgetConfig(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    isEnabled: isEnabled ?? this.isEnabled,
+    sortOrder: sortOrder ?? this.sortOrder,
+    colorSlot: colorSlot ?? this.colorSlot,
+    metadata: metadata.present ? metadata.value : this.metadata,
+  );
+  UiWidgetConfig copyWithCompanion(UiWidgetTableCompanion data) {
+    return UiWidgetConfig(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      colorSlot: data.colorSlot.present ? data.colorSlot.value : this.colorSlot,
+      metadata: data.metadata.present ? data.metadata.value : this.metadata,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UiWidgetConfig(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('colorSlot: $colorSlot, ')
+          ..write('metadata: $metadata')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, isEnabled, sortOrder, colorSlot, metadata);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UiWidgetConfig &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.isEnabled == this.isEnabled &&
+          other.sortOrder == this.sortOrder &&
+          other.colorSlot == this.colorSlot &&
+          other.metadata == this.metadata);
+}
+
+class UiWidgetTableCompanion extends UpdateCompanion<UiWidgetConfig> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<bool> isEnabled;
+  final Value<int> sortOrder;
+  final Value<String> colorSlot;
+  final Value<String?> metadata;
+  final Value<int> rowid;
+  const UiWidgetTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.colorSlot = const Value.absent(),
+    this.metadata = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UiWidgetTableCompanion.insert({
+    required String id,
+    required String name,
+    this.isEnabled = const Value.absent(),
+    required int sortOrder,
+    this.colorSlot = const Value.absent(),
+    this.metadata = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       sortOrder = Value(sortOrder);
+  static Insertable<UiWidgetConfig> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<bool>? isEnabled,
+    Expression<int>? sortOrder,
+    Expression<String>? colorSlot,
+    Expression<String>? metadata,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (colorSlot != null) 'color_slot': colorSlot,
+      if (metadata != null) 'metadata': metadata,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UiWidgetTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<bool>? isEnabled,
+    Value<int>? sortOrder,
+    Value<String>? colorSlot,
+    Value<String?>? metadata,
+    Value<int>? rowid,
+  }) {
+    return UiWidgetTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isEnabled: isEnabled ?? this.isEnabled,
+      sortOrder: sortOrder ?? this.sortOrder,
+      colorSlot: colorSlot ?? this.colorSlot,
+      metadata: metadata ?? this.metadata,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (colorSlot.present) {
+      map['color_slot'] = Variable<String>(colorSlot.value);
+    }
+    if (metadata.present) {
+      map['metadata'] = Variable<String>(metadata.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UiWidgetTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('colorSlot: $colorSlot, ')
+          ..write('metadata: $metadata, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2151,9 +2559,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $OrderHistoryTableTable orderHistoryTable =
       $OrderHistoryTableTable(this);
   late final $FavoriteTableTable favoriteTable = $FavoriteTableTable(this);
+  late final $UiWidgetTableTable uiWidgetTable = $UiWidgetTableTable(this);
   late final AlcoholDao alcoholDao = AlcoholDao(this as AppDatabase);
   late final CartDao cartDao = CartDao(this as AppDatabase);
   late final FavoritesDao favoritesDao = FavoritesDao(this as AppDatabase);
+  late final UiWidgetDao uiWidgetDao = UiWidgetDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2164,6 +2574,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     cartTable,
     orderHistoryTable,
     favoriteTable,
+    uiWidgetTable,
   ];
 }
 
@@ -3315,6 +3726,225 @@ typedef $$FavoriteTableTableProcessedTableManager =
       FavoriteTableData,
       PrefetchHooks Function()
     >;
+typedef $$UiWidgetTableTableCreateCompanionBuilder =
+    UiWidgetTableCompanion Function({
+      required String id,
+      required String name,
+      Value<bool> isEnabled,
+      required int sortOrder,
+      Value<String> colorSlot,
+      Value<String?> metadata,
+      Value<int> rowid,
+    });
+typedef $$UiWidgetTableTableUpdateCompanionBuilder =
+    UiWidgetTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<bool> isEnabled,
+      Value<int> sortOrder,
+      Value<String> colorSlot,
+      Value<String?> metadata,
+      Value<int> rowid,
+    });
+
+class $$UiWidgetTableTableFilterComposer
+    extends Composer<_$AppDatabase, $UiWidgetTableTable> {
+  $$UiWidgetTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get colorSlot => $composableBuilder(
+    column: $table.colorSlot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get metadata => $composableBuilder(
+    column: $table.metadata,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UiWidgetTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $UiWidgetTableTable> {
+  $$UiWidgetTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get colorSlot => $composableBuilder(
+    column: $table.colorSlot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get metadata => $composableBuilder(
+    column: $table.metadata,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UiWidgetTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UiWidgetTableTable> {
+  $$UiWidgetTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<String> get colorSlot =>
+      $composableBuilder(column: $table.colorSlot, builder: (column) => column);
+
+  GeneratedColumn<String> get metadata =>
+      $composableBuilder(column: $table.metadata, builder: (column) => column);
+}
+
+class $$UiWidgetTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UiWidgetTableTable,
+          UiWidgetConfig,
+          $$UiWidgetTableTableFilterComposer,
+          $$UiWidgetTableTableOrderingComposer,
+          $$UiWidgetTableTableAnnotationComposer,
+          $$UiWidgetTableTableCreateCompanionBuilder,
+          $$UiWidgetTableTableUpdateCompanionBuilder,
+          (
+            UiWidgetConfig,
+            BaseReferences<_$AppDatabase, $UiWidgetTableTable, UiWidgetConfig>,
+          ),
+          UiWidgetConfig,
+          PrefetchHooks Function()
+        > {
+  $$UiWidgetTableTableTableManager(_$AppDatabase db, $UiWidgetTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UiWidgetTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UiWidgetTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UiWidgetTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<String> colorSlot = const Value.absent(),
+                Value<String?> metadata = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UiWidgetTableCompanion(
+                id: id,
+                name: name,
+                isEnabled: isEnabled,
+                sortOrder: sortOrder,
+                colorSlot: colorSlot,
+                metadata: metadata,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<bool> isEnabled = const Value.absent(),
+                required int sortOrder,
+                Value<String> colorSlot = const Value.absent(),
+                Value<String?> metadata = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UiWidgetTableCompanion.insert(
+                id: id,
+                name: name,
+                isEnabled: isEnabled,
+                sortOrder: sortOrder,
+                colorSlot: colorSlot,
+                metadata: metadata,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UiWidgetTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UiWidgetTableTable,
+      UiWidgetConfig,
+      $$UiWidgetTableTableFilterComposer,
+      $$UiWidgetTableTableOrderingComposer,
+      $$UiWidgetTableTableAnnotationComposer,
+      $$UiWidgetTableTableCreateCompanionBuilder,
+      $$UiWidgetTableTableUpdateCompanionBuilder,
+      (
+        UiWidgetConfig,
+        BaseReferences<_$AppDatabase, $UiWidgetTableTable, UiWidgetConfig>,
+      ),
+      UiWidgetConfig,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3329,4 +3959,6 @@ class $AppDatabaseManager {
       $$OrderHistoryTableTableTableManager(_db, _db.orderHistoryTable);
   $$FavoriteTableTableTableManager get favoriteTable =>
       $$FavoriteTableTableTableManager(_db, _db.favoriteTable);
+  $$UiWidgetTableTableTableManager get uiWidgetTable =>
+      $$UiWidgetTableTableTableManager(_db, _db.uiWidgetTable);
 }

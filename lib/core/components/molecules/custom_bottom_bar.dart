@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:angelshare_app/core/components/atoms/glass_container.dart';
 import 'package:angelshare_app/core/theme/app_theme.dart';
+import 'package:angelshare_app/core/theme/app_sizes.dart';
 
 bool get isMobileClient => !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 
@@ -18,6 +20,18 @@ class CustomBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeColors = Theme.of(context).extension<AppThemeColors>() ??
+        const AppThemeColors(
+          backgroundObsidian: Colors.black,
+          backgroundDeep: Colors.black87,
+          primary: Colors.amber,
+          accent: Colors.amberAccent,
+          muted: Colors.grey,
+          glassWhite: Colors.white10,
+          glassBorder: Colors.white24,
+          glassShadow: Colors.black38,
+        );
+
     final List<_BottomBarItem> items;
     if (isMobileClient) {
       items = [
@@ -33,12 +47,12 @@ class CustomBottomBar extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+      padding: EdgeInsets.fromLTRB(AppSizes.xxl.w, 0, AppSizes.xxl.w, AppSizes.xxl.h),
       child: GlassContainer(
-        borderRadius: 24,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        backgroundColor: const Color(0x18FFFFFF),
-        borderColor: const Color(0x26FFFFFF),
+        borderRadius: AppSizes.radius3Xl, // standard 24
+        padding: EdgeInsets.symmetric(vertical: AppSizes.sm.h, horizontal: AppSizes.lg.w),
+        backgroundColor: themeColors.glassWhite,
+        borderColor: themeColors.glassBorder,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(items.length, (index) {
@@ -48,14 +62,14 @@ class CustomBottomBar extends StatelessWidget {
             final Color activeColor;
             if (isMobileClient) {
               activeColor = index == 0
-                  ? AppTheme.goldPrimary
+                  ? themeColors.primary
                   : index == 1
-                      ? AppTheme.goldAccent
-                      : AppTheme.goldAccent;
+                      ? themeColors.accent
+                      : themeColors.accent;
             } else {
               activeColor = index == 0
-                  ? AppTheme.goldPrimary
-                  : AppTheme.goldAccent;
+                  ? themeColors.primary
+                  : themeColors.accent;
             }
 
             return GestureDetector(
@@ -63,9 +77,9 @@ class CustomBottomBar extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: AppSizes.radiusSm.w + 6.w, vertical: AppSizes.sm.h),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusXl.r),
                   color: isSelected ? activeColor.withValues(alpha: 0.15) : Colors.transparent,
                 ),
                 child: Column(
@@ -74,21 +88,21 @@ class CustomBottomBar extends StatelessWidget {
                     Icon(
                       item.icon,
                       color: isSelected ? activeColor : const Color(0xFF8F88A3),
-                      size: 24,
+                      size: AppSizes.iconLg.r,
                       shadows: isSelected
                           ? [
                               Shadow(
                                 color: activeColor,
-                                blurRadius: 10,
+                                blurRadius: 10.r,
                               )
                             ]
                           : null,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: AppSizes.xs.h),
                     Text(
                       item.label,
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: AppSizes.fontXs.sp,
                         fontWeight: FontWeight.bold,
                         color: isSelected ? Colors.white : const Color(0xFF8F88A3),
                       ),

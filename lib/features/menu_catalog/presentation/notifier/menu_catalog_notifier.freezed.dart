@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MenuCatalogState {
-  bool get isLoading => throw _privateConstructorUsedError;
   List<String> get categories => throw _privateConstructorUsedError;
   String get selectedCategory => throw _privateConstructorUsedError;
   List<AlcoholEntity> get cocktails => throw _privateConstructorUsedError;
@@ -29,7 +28,6 @@ mixin _$MenuCatalogState {
       throw _privateConstructorUsedError;
   DrinkDetailEntity? get randomDrinkDetail =>
       throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of MenuCatalogState
   /// with the given fields replaced by the non-null parameter values.
@@ -46,7 +44,6 @@ abstract class $MenuCatalogStateCopyWith<$Res> {
   ) = _$MenuCatalogStateCopyWithImpl<$Res, MenuCatalogState>;
   @useResult
   $Res call({
-    bool isLoading,
     List<String> categories,
     String selectedCategory,
     List<AlcoholEntity> cocktails,
@@ -56,7 +53,6 @@ abstract class $MenuCatalogStateCopyWith<$Res> {
     bool isSynthesizing,
     DrinkDetailEntity? selectedDrinkDetail,
     DrinkDetailEntity? randomDrinkDetail,
-    String? errorMessage,
   });
 
   $DrinkDetailEntityCopyWith<$Res>? get selectedDrinkDetail;
@@ -78,7 +74,6 @@ class _$MenuCatalogStateCopyWithImpl<$Res, $Val extends MenuCatalogState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
     Object? categories = null,
     Object? selectedCategory = null,
     Object? cocktails = null,
@@ -88,14 +83,9 @@ class _$MenuCatalogStateCopyWithImpl<$Res, $Val extends MenuCatalogState>
     Object? isSynthesizing = null,
     Object? selectedDrinkDetail = freezed,
     Object? randomDrinkDetail = freezed,
-    Object? errorMessage = freezed,
   }) {
     return _then(
       _value.copyWith(
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
             categories: null == categories
                 ? _value.categories
                 : categories // ignore: cast_nullable_to_non_nullable
@@ -132,10 +122,6 @@ class _$MenuCatalogStateCopyWithImpl<$Res, $Val extends MenuCatalogState>
                 ? _value.randomDrinkDetail
                 : randomDrinkDetail // ignore: cast_nullable_to_non_nullable
                       as DrinkDetailEntity?,
-            errorMessage: freezed == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String?,
           )
           as $Val,
     );
@@ -182,7 +168,6 @@ abstract class _$$MenuCatalogStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    bool isLoading,
     List<String> categories,
     String selectedCategory,
     List<AlcoholEntity> cocktails,
@@ -192,7 +177,6 @@ abstract class _$$MenuCatalogStateImplCopyWith<$Res>
     bool isSynthesizing,
     DrinkDetailEntity? selectedDrinkDetail,
     DrinkDetailEntity? randomDrinkDetail,
-    String? errorMessage,
   });
 
   @override
@@ -215,7 +199,6 @@ class __$$MenuCatalogStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
     Object? categories = null,
     Object? selectedCategory = null,
     Object? cocktails = null,
@@ -225,14 +208,9 @@ class __$$MenuCatalogStateImplCopyWithImpl<$Res>
     Object? isSynthesizing = null,
     Object? selectedDrinkDetail = freezed,
     Object? randomDrinkDetail = freezed,
-    Object? errorMessage = freezed,
   }) {
     return _then(
       _$MenuCatalogStateImpl(
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
         categories: null == categories
             ? _value._categories
             : categories // ignore: cast_nullable_to_non_nullable
@@ -269,10 +247,6 @@ class __$$MenuCatalogStateImplCopyWithImpl<$Res>
             ? _value.randomDrinkDetail
             : randomDrinkDetail // ignore: cast_nullable_to_non_nullable
                   as DrinkDetailEntity?,
-        errorMessage: freezed == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String?,
       ),
     );
   }
@@ -282,7 +256,6 @@ class __$$MenuCatalogStateImplCopyWithImpl<$Res>
 
 class _$MenuCatalogStateImpl implements _MenuCatalogState {
   const _$MenuCatalogStateImpl({
-    this.isLoading = false,
     final List<String> categories = const [],
     this.selectedCategory = '',
     final List<AlcoholEntity> cocktails = const [],
@@ -292,13 +265,9 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
     this.isSynthesizing = false,
     this.selectedDrinkDetail,
     this.randomDrinkDetail,
-    this.errorMessage,
   }) : _categories = categories,
        _cocktails = cocktails;
 
-  @override
-  @JsonKey()
-  final bool isLoading;
   final List<String> _categories;
   @override
   @JsonKey()
@@ -336,12 +305,10 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
   final DrinkDetailEntity? selectedDrinkDetail;
   @override
   final DrinkDetailEntity? randomDrinkDetail;
-  @override
-  final String? errorMessage;
 
   @override
   String toString() {
-    return 'MenuCatalogState(isLoading: $isLoading, categories: $categories, selectedCategory: $selectedCategory, cocktails: $cocktails, searchQuery: $searchQuery, activeTab: $activeTab, isLoadingDetail: $isLoadingDetail, isSynthesizing: $isSynthesizing, selectedDrinkDetail: $selectedDrinkDetail, randomDrinkDetail: $randomDrinkDetail, errorMessage: $errorMessage)';
+    return 'MenuCatalogState(categories: $categories, selectedCategory: $selectedCategory, cocktails: $cocktails, searchQuery: $searchQuery, activeTab: $activeTab, isLoadingDetail: $isLoadingDetail, isSynthesizing: $isSynthesizing, selectedDrinkDetail: $selectedDrinkDetail, randomDrinkDetail: $randomDrinkDetail)';
   }
 
   @override
@@ -349,8 +316,6 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MenuCatalogStateImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(
               other._categories,
               _categories,
@@ -372,15 +337,12 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
             (identical(other.selectedDrinkDetail, selectedDrinkDetail) ||
                 other.selectedDrinkDetail == selectedDrinkDetail) &&
             (identical(other.randomDrinkDetail, randomDrinkDetail) ||
-                other.randomDrinkDetail == randomDrinkDetail) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.randomDrinkDetail == randomDrinkDetail));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    isLoading,
     const DeepCollectionEquality().hash(_categories),
     selectedCategory,
     const DeepCollectionEquality().hash(_cocktails),
@@ -390,7 +352,6 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
     isSynthesizing,
     selectedDrinkDetail,
     randomDrinkDetail,
-    errorMessage,
   );
 
   /// Create a copy of MenuCatalogState
@@ -407,7 +368,6 @@ class _$MenuCatalogStateImpl implements _MenuCatalogState {
 
 abstract class _MenuCatalogState implements MenuCatalogState {
   const factory _MenuCatalogState({
-    final bool isLoading,
     final List<String> categories,
     final String selectedCategory,
     final List<AlcoholEntity> cocktails,
@@ -417,11 +377,8 @@ abstract class _MenuCatalogState implements MenuCatalogState {
     final bool isSynthesizing,
     final DrinkDetailEntity? selectedDrinkDetail,
     final DrinkDetailEntity? randomDrinkDetail,
-    final String? errorMessage,
   }) = _$MenuCatalogStateImpl;
 
-  @override
-  bool get isLoading;
   @override
   List<String> get categories;
   @override
@@ -440,8 +397,6 @@ abstract class _MenuCatalogState implements MenuCatalogState {
   DrinkDetailEntity? get selectedDrinkDetail;
   @override
   DrinkDetailEntity? get randomDrinkDetail;
-  @override
-  String? get errorMessage;
 
   /// Create a copy of MenuCatalogState
   /// with the given fields replaced by the non-null parameter values.

@@ -8,6 +8,7 @@ import 'package:angelshare_app/core/theme/app_theme.dart';
 import 'package:angelshare_app/features/cart/cart_provider.dart';
 import 'package:angelshare_app/features/favorites/favorites_provider.dart';
 import 'package:angelshare_app/features/menu_catalog/domain/models/entities/alcohol/drink_detail_entity.dart';
+import 'package:angelshare_app/core/providers/view_state.dart';
 
 class DrinkDetailSheet extends ConsumerWidget {
   final DrinkDetailEntity drink;
@@ -20,7 +21,9 @@ class DrinkDetailSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch favorites to render dynamic heart icon state
-    final isFavorite = ref.watch(favoritesNotifierProvider).favorites.any((f) => f.id == drink.id);
+    final ViewState<FavoritesState> favoritesViewState = ref.watch(favoritesNotifierProvider);
+    final favoritesState = favoritesViewState.data ?? const FavoritesState();
+    final isFavorite = favoritesState.favorites.any((f) => f.id == drink.id);
 
     return Container(
       decoration: const BoxDecoration(

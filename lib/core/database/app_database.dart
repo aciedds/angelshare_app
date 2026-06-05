@@ -13,6 +13,8 @@ import 'package:angelshare_app/features/cart/data/datasources/local/drift/tables
 import 'package:angelshare_app/features/cart/data/datasources/local/drift/daos/cart_dao.dart';
 import 'package:angelshare_app/features/favorites/data/datasources/local/drift/tables/favorite_table.dart';
 import 'package:angelshare_app/features/favorites/data/datasources/local/drift/daos/favorites_dao.dart';
+import 'package:angelshare_app/core/database/tables/ui_widget_table.dart';
+import 'package:angelshare_app/core/database/daos/ui_widget_dao.dart';
 
 part 'app_database.g.dart';
 
@@ -23,18 +25,20 @@ part 'app_database.g.dart';
     CartTable,
     OrderHistoryTable,
     FavoriteTable,
+    UiWidgetTable,
   ],
   daos: [
     AlcoholDao,
     CartDao,
     FavoritesDao,
+    UiWidgetDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
@@ -44,6 +48,9 @@ class AppDatabase extends _$AppDatabase {
           await migrator.createTable(cartTable);
           await migrator.createTable(orderHistoryTable);
           await migrator.createTable(favoriteTable);
+        }
+        if (from < 3) {
+          await migrator.createTable(uiWidgetTable);
         }
       },
     );

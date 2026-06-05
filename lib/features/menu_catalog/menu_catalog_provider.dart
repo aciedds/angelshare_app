@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:angelshare_app/core/database/app_database.dart';
 import 'package:angelshare_app/core/network/dio_client.dart';
+import 'package:angelshare_app/core/providers/view_state.dart';
 import 'package:angelshare_app/features/menu_catalog/data/datasources/local/drift/daos/alcohol_dao.dart';
 import 'package:angelshare_app/features/menu_catalog/data/datasources/remote/cocktail_remote_data_source.dart';
 import 'package:angelshare_app/features/menu_catalog/data/repositories/menu_catalog_repository_impl.dart';
@@ -8,6 +9,7 @@ import 'package:angelshare_app/features/menu_catalog/domain/repositories/menu_ca
 import 'package:angelshare_app/features/menu_catalog/domain/usecases/get_cocktails_by_category_usecase.dart';
 import 'package:angelshare_app/features/menu_catalog/domain/usecases/get_cocktail_detail_usecase.dart';
 import 'package:angelshare_app/features/menu_catalog/domain/usecases/get_random_cocktail_usecase.dart';
+import 'package:angelshare_app/features/menu_catalog/domain/usecases/get_categories_usecase.dart';
 import 'package:angelshare_app/features/menu_catalog/presentation/notifier/menu_catalog_notifier.dart';
 
 // Central Database Provider
@@ -52,17 +54,22 @@ final getRandomCocktailUseCaseProvider = Provider<GetRandomCocktailUseCase>((ref
   return GetRandomCocktailUseCase(repository: repo);
 });
 
+final getCategoriesUseCaseProvider = Provider<GetCategoriesUseCase>((ref) {
+  final repo = ref.watch(menuCatalogRepositoryProvider);
+  return GetCategoriesUseCase(repository: repo);
+});
+
 // Notifier Provider for UI State
-final menuCatalogNotifierProvider = StateNotifierProvider<MenuCatalogNotifier, MenuCatalogState>((ref) {
+final menuCatalogNotifierProvider = StateNotifierProvider<MenuCatalogNotifier, ViewState<MenuCatalogState>>((ref) {
   final getCocktailsUseCase = ref.watch(getCocktailsByCategoryUseCaseProvider);
   final getCocktailDetailUseCase = ref.watch(getCocktailDetailUseCaseProvider);
   final getRandomCocktailUseCase = ref.watch(getRandomCocktailUseCaseProvider);
-  final repo = ref.watch(menuCatalogRepositoryProvider);
+  final getCategoriesUseCase = ref.watch(getCategoriesUseCaseProvider);
   
   return MenuCatalogNotifier(
     getCocktailsUseCase: getCocktailsUseCase,
     getCocktailDetailUseCase: getCocktailDetailUseCase,
     getRandomCocktailUseCase: getRandomCocktailUseCase,
-    repository: repo,
+    getCategoriesUseCase: getCategoriesUseCase,
   );
 });

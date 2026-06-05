@@ -20,8 +20,6 @@ mixin _$CartState {
   List<CartItemEntity> get cartItems => throw _privateConstructorUsedError;
   List<OrderHistoryEntity> get orderHistory =>
       throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of CartState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,8 +36,6 @@ abstract class $CartStateCopyWith<$Res> {
   $Res call({
     List<CartItemEntity> cartItems,
     List<OrderHistoryEntity> orderHistory,
-    bool isLoading,
-    String? errorMessage,
   });
 }
 
@@ -57,12 +53,7 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? cartItems = null,
-    Object? orderHistory = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
-  }) {
+  $Res call({Object? cartItems = null, Object? orderHistory = null}) {
     return _then(
       _value.copyWith(
             cartItems: null == cartItems
@@ -73,14 +64,6 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
                 ? _value.orderHistory
                 : orderHistory // ignore: cast_nullable_to_non_nullable
                       as List<OrderHistoryEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: freezed == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String?,
           )
           as $Val,
     );
@@ -99,8 +82,6 @@ abstract class _$$CartStateImplCopyWith<$Res>
   $Res call({
     List<CartItemEntity> cartItems,
     List<OrderHistoryEntity> orderHistory,
-    bool isLoading,
-    String? errorMessage,
   });
 }
 
@@ -117,12 +98,7 @@ class __$$CartStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? cartItems = null,
-    Object? orderHistory = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
-  }) {
+  $Res call({Object? cartItems = null, Object? orderHistory = null}) {
     return _then(
       _$CartStateImpl(
         cartItems: null == cartItems
@@ -133,14 +109,6 @@ class __$$CartStateImplCopyWithImpl<$Res>
             ? _value._orderHistory
             : orderHistory // ignore: cast_nullable_to_non_nullable
                   as List<OrderHistoryEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: freezed == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String?,
       ),
     );
   }
@@ -152,8 +120,6 @@ class _$CartStateImpl implements _CartState {
   const _$CartStateImpl({
     final List<CartItemEntity> cartItems = const [],
     final List<OrderHistoryEntity> orderHistory = const [],
-    this.isLoading = false,
-    this.errorMessage,
   }) : _cartItems = cartItems,
        _orderHistory = orderHistory;
 
@@ -176,14 +142,8 @@ class _$CartStateImpl implements _CartState {
   }
 
   @override
-  @JsonKey()
-  final bool isLoading;
-  @override
-  final String? errorMessage;
-
-  @override
   String toString() {
-    return 'CartState(cartItems: $cartItems, orderHistory: $orderHistory, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'CartState(cartItems: $cartItems, orderHistory: $orderHistory)';
   }
 
   @override
@@ -198,11 +158,7 @@ class _$CartStateImpl implements _CartState {
             const DeepCollectionEquality().equals(
               other._orderHistory,
               _orderHistory,
-            ) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            ));
   }
 
   @override
@@ -210,8 +166,6 @@ class _$CartStateImpl implements _CartState {
     runtimeType,
     const DeepCollectionEquality().hash(_cartItems),
     const DeepCollectionEquality().hash(_orderHistory),
-    isLoading,
-    errorMessage,
   );
 
   /// Create a copy of CartState
@@ -227,18 +181,12 @@ abstract class _CartState implements CartState {
   const factory _CartState({
     final List<CartItemEntity> cartItems,
     final List<OrderHistoryEntity> orderHistory,
-    final bool isLoading,
-    final String? errorMessage,
   }) = _$CartStateImpl;
 
   @override
   List<CartItemEntity> get cartItems;
   @override
   List<OrderHistoryEntity> get orderHistory;
-  @override
-  bool get isLoading;
-  @override
-  String? get errorMessage;
 
   /// Create a copy of CartState
   /// with the given fields replaced by the non-null parameter values.
